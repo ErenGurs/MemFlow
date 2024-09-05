@@ -1,9 +1,14 @@
 
 ## Create folder structure under bms_data/
-Some local changes to generate data structure  under ``bms_data/`` folder that MemFlow wants to see.
+Form some real data set ``test_real/real_validation1/val/``, generate folder structure under ``bms_data/`` folder, so that MemFlow can iterate over them.
 
 ```Shell
-python process_data.py /mnt/task_runtime/applefrc/test_real/real_validation1/val/
+python process_data.py test_real/real_validation1/val/
+```
+
+Then run MemFlow for the entire dataset of bms_data/:
+```Shell
+python inference.py --name MemFlowNet --stage sintel --restore_ckpt ckpts/MemFlowNet_sintel.pth --seq_dir bms_data/ --vis_dir temp/test_real_memflow
 ```
 
 

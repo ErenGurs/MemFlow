@@ -46,13 +46,14 @@ def train(gpu, cfg):
     rank = cfg.node_rank * cfg.gpus + gpu
     torch.cuda.set_device(rank)
 
+    model = nn.SyncBatchNorm.convert_sync_batchnorm(build_network(cfg)).cuda()
     if cfg.DDP:
         dist.init_process_group(backend='nccl',
                                 init_method='env://',
                                 world_size=cfg.world_size,
                                 rank=rank,
                                 group_name='mtorch')
-        model = nn.SyncBatchNorm.convert_sync_batchnorm(build_network(cfg)).cuda()
+        #model = nn.SyncBatchNorm.convert_sync_batchnorm(build_network(cfg)).cuda()
         model = nn.parallel.DistributedDataParallel(model, device_ids=[rank])
 
     loss_func = sequence_loss

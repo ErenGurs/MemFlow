@@ -6,9 +6,10 @@ Form some real data set ``test_real/real_validation1/val/``, generate folder str
 python process_data.py test_real/real_validation1/val/
 ```
 
-Then run MemFlow for the entire dataset of bms_data/:
+Then run MemFlow for the entire dataset of bms_data/. But before runnning, you make sure there are only images (i.e. no flow) in the ``bms_data/`` folder (simply remove them):
 ```Shell
-python inference.py --name MemFlowNet --stage sintel --restore_ckpt ckpts/MemFlowNet_sintel.pth --seq_dir bms_data/ --vis_dir temp/test_real_memflow
+$ rm ./bms_data/val*/*-flow_*
+$ python inference.py --name MemFlowNet --stage sintel --restore_ckpt ckpts/MemFlowNet_sintel.pth --seq_dir bms_data/ --vis_dir temp/test_real_memflow
 ```
 
 

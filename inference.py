@@ -106,11 +106,11 @@ if __name__ == '__main__':
     parser.add_argument('--name', default='MemFlowNet', help="name your experiment")
     parser.add_argument('--stage', help="determines which dataset to use for training")
     parser.add_argument('--restore_ckpt', help="restore checkpoint")
-    parser.add_argument('--firstfile', type=str, help='dir of first image')
-    parser.add_argument('--secondfile', type=str, help='dir of second image')
+    parser.add_argument('--firstfile', type=str, help='first image in seq_dir (optional)')
+    parser.add_argument('--secondfile', type=str, help='second image in seq_dir (optional)')
 
-    parser.add_argument('--seq_dir', default='default')
-    parser.add_argument('--vis_dir', default='default')
+    parser.add_argument('--seq_dir', help="folder for input images. If there are subfolders, it will loop through them", default='default')
+    parser.add_argument('--vis_dir', help="outputf folder which will follow the structure of input seq_dir", default='default')
 
     args = parser.parse_args()
 

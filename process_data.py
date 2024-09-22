@@ -24,6 +24,15 @@ class FlowUtils:
             str_flow, dtype=numpy.float32, count=height * width * 2, offset=12).reshape([height, width, 2])
     # end
 
+    def write_flo(self, flow, str_file):
+        #str_file += '.flo'
+        with open(str_file, 'wb') as f:
+            numpy.array(202021.25, dtype=numpy.float32).tofile(f)
+            height, width = flow.shape[:2]
+            numpy.array(width, dtype=numpy.uint32).tofile(f)
+            numpy.array(height, dtype=numpy.uint32).tofile(f)
+            flow.astype(numpy.float32).tofile(f)
+
     # Save flow in numpy array as colorwheel
     def save_color_flow(self, flow, name):
         flow_color = flow_viz.flow_to_color(flow, convert_to_bgr=False)

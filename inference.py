@@ -15,9 +15,9 @@ import torch
 from utils import flow_viz
 from utils import frame_utils
 from utils.utils import InputPadder, forward_interpolate
-from utils import backwarp
+from core.utils import backwarp
 from inference import inference_core_skflow as inference_core
-
+from process_data import FlowUtils
 
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
@@ -82,6 +82,9 @@ def inference(cfg):
     if not os.path.exists(cfg.vis_dir):
         os.makedirs(cfg.vis_dir)
 
+    # Use FlowUtils package
+    fu = FlowUtils()
+
     print(f"save results...")
     N = len(results)
     for idx in range(N):
@@ -91,12 +94,16 @@ def inference(cfg):
 
         #bkwrp = backwarp.ModuleBackwarp()
         # Backwarp second image + Denormalize
-        backwarped_tensor = (backwarp.function_backwarp(images[:,1], results[idx].cuda().unsqueeze(dim=0)) + 1.0) / 2
-        torchvision.utils.save_image(backwarped_tensor, cfg.vis_dir + '/' + 'backwarp.png')
+        backwarped_tensor = (backwarp.function_backwarp(images[:,idx+1], results[idx].cuda().unsqueeze(dim=0)) + 1.0) / 2
+        torchvision.utils.save_image(backwarped_tensor, cfg.vis_dir + '/' + f"backwarp_{idx+1}.png")
         
         #backwarped_frame = Image.fromarray(
         #np.array(torch.squeeze(backwarped_tensor.cpu())).transpose(1, 2, 0).astype(np.uint8))
         #backwarped_frame.save(cfg.vis_dir + '/' + 'backwarp.png')
+
+
+        fu.write_flo(np.array(torch.squeeze(results[idx].cpu())).transpose(1, 2, 0),
+                  '{}/flow_{:04}_to_{:04}.flo'.format(cfg.vis_dir, idx + 1, idx + 2))
 
     return
 

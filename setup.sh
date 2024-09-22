@@ -6,7 +6,7 @@ wget -P ckpts/ https://github.com/DQiaole/MemFlow/releases/download/v1.0.0/MemFl
 
 alias conductor='AWS_EC2_METADATA_DISABLED=true aws --endpoint-url https://conductor.data.apple.com'
 
-conductor s3 cp --recursive s3://egurses-frc/ImagePairs/ ./ImagePairs/
+# conductor s3 cp --recursive s3://egurses-frc/ImagePairs/ ./ImagePairs/
 conductor s3 cp s3://mingchen_li/real_validation1.zip ./
 # s3zip -e s3://mingchen_li/real_validation1.zip ./test_real/
 

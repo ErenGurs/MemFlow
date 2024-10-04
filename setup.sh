@@ -21,5 +21,14 @@ conductor s3 cp s3://mingchen_li/real_validation1.zip ./
 #pip install yacs loguru einops timm==0.4.12 imageio matplotlib tensorboard scipy opencv-python h5py tqdm
 #
 conda create --name memflow --clone iris
+conda activate memflow
+
 pip install yacs loguru einops timm==0.4.12 # imageio matplotlib tensorboard scipy opencv-python h5py tqdm
 
+
+# To be removed later:
+# An experiment to run MemFlow on sequence data
+conductor s3 cp --recursive s3://egurses-frc/BMS/input/bms.video.new/ ./bms.video.new/
+mkdir val5_holes_new/
+ffmpeg -i bms.video.new/715G3Q7O2IS9C8NJ_IMG_0073.MOV  val5_holes_new/'%04d.png'
+inference.py --name MemFlowNet --stage sintel --restore_ckpt ckpts/MemFlowNet_things.pth --seq_dir ./val5_holes_new/ --vis_dir temp/val5_holes_new/

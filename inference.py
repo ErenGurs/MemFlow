@@ -72,6 +72,7 @@ def inference(cfg):
     results = []
     print(f"start inference...")
     for ti in range(images.shape[1] - 1):
+        print (f"Processing {ti} of {images.shape[1]} frames", end="\r")
         flow_low, flow_pre = processor.step(images[:, ti:ti + 2], end=(ti == images.shape[1] - 2),
                                             add_pe=('rope' in cfg and cfg.rope), flow_init=flow_prev)
         flow_pre = padder.unpad(flow_pre[0]).cpu()
@@ -88,6 +89,7 @@ def inference(cfg):
     print(f"save results...")
     N = len(results)
     for idx in range(N):
+        print (f"Saving {idx} of {N} frames", end="\r")
         flow_img = flow_viz.flow_to_image(results[idx].permute(1, 2, 0).numpy())
         image = Image.fromarray(flow_img)
         image.save('{}/flow_{:04}_to_{:04}.png'.format(cfg.vis_dir, idx + 1, idx + 2))

@@ -119,7 +119,7 @@ if __name__ == '__main__':
     parser.add_argument('--secondfile', type=str, help='second image in seq_dir (optional)')
 
     parser.add_argument('--seq_dir', help="folder for input images. If there are subfolders, it will loop through them", default='default')
-    parser.add_argument('--vis_dir', help="outputf folder which will follow the structure of input seq_dir", default='default')
+    parser.add_argument('--vis_dir', help="output folder which will follow the structure of input seq_dir", default='default')
 
     args = parser.parse_args()
 
@@ -127,6 +127,8 @@ if __name__ == '__main__':
         from configs.things_memflownet import get_cfg
     elif args.stage == 'sintel':
         from configs.sintel_memflownet import get_cfg
+    elif args.stage == 'sintel_t':  # Transformer based MemFlow trained on Sintel
+        from configs.sintel_memflownet_t import get_cfg
     elif args.stage == 'spring_only':
         from configs.spring_memflownet import get_cfg
     elif args.stage == 'kitti':

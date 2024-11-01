@@ -3,6 +3,7 @@
 mkdir ckpts/
 wget -P ckpts/ https://github.com/DQiaole/MemFlow/releases/download/v1.0.0/MemFlowNet_sintel.pth
 wget -P ckpts/ https://github.com/DQiaole/MemFlow/releases/download/v1.0.0/MemFlowNet_things.pth
+wget -P ckpts/ https://github.com/DQiaole/MemFlow/releases/download/v1.0.0/MemFlowNet_T_sintel.pth
 
 alias conductor='AWS_EC2_METADATA_DISABLED=true aws --endpoint-url https://conductor.data.apple.com'
 
